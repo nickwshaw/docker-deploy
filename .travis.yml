@@ -7,3 +7,17 @@ before_install:
     - docker build -t nickwshaw/docker-deploy -f Dockerfile.dev .
 script:
     - docker run -e CI=true nickwshaw/docker-deploy yarn run test
+
+deploy:
+    provider: elasticbeanstalk
+    region: "eu-west-1"
+    app: "docker-deploy"
+    env: "DockerDeploy-env"
+    bucket_name: "elasticbeanstalk-eu-west-1-504807237572"
+    bucket_path: "docker-deploy"
+    on:
+        branch: master
+    access_key_id:
+        secure: "$AWS_ACCESS_KEY"
+    secret_access_key:
+        secure: "$AWS_SECRET_KEY"
