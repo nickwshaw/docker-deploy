@@ -1,6 +1,9 @@
+language: generic
 sudo: required
 services:
     - docker
 
 before_install:
-    docker build -t nickwshaw/docker-deploy -f Dockerfile.dev .
+    - docker build -t nickwshaw/docker-deploy -f Dockerfile.dev .
+script:
+    - docker run -e CI=true nickwshaw/docker-deploy yarn run test
